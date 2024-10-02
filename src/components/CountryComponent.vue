@@ -1,5 +1,5 @@
 <template>
-    <div class="profile-container">
+    <div class="main-container">
       <header class="header">
           <div class="flag-container">
               <img :src="country[index]?.flags.png" :alt="country[index]?.flags.alt" class="profile-picture">
@@ -7,8 +7,8 @@
         <h1>{{ country[index]?.name.official }}</h1>
       </header>
       
-      <div class="profile-content">
-        <div class="profile-sidebar h-[50vh] overflow-y-scroll mt-[150px]">
+      <div class="list-country">
+        <div class="list-sidebar h-[50vh] overflow-y-scroll mt-[150px]">
             <h2>Liste des pays</h2>
             <ul>
               <li v-for="(pays, index) in country" :key="index">
@@ -17,17 +17,17 @@
             </ul>
         </div>
         
-        <div class="profile-main">
+        <div class="info-container">
           <div class="flex justify-between gap-10 p-2">
-              <section class="formation w-[50%]">
+              <section class="block-info1 w-[50%]">
                 <div>
                   <p><strong>Capitale: </strong><span>{{ country[index]?.capital[0] }}</span></p>
                   <p><strong>Population: </strong><span>{{ country[index]?.population }}</span></p>
                 </div>
               </section>
               
-              <section class="competences w-[50%]">
-                <h3>Autres informations</h3>
+              <section class="block-info2" w-[50%]">
+                <h3>Autres information</h3>
                 <div v-for="skill in profile.skills" :key="skill.name" class="skill-bar">
                     <p>...</p>
                   <!-- <span class="skill-name">{{ skill.name }}</span>
@@ -39,7 +39,7 @@
               </section>
           </div>
           
-          <section class="a-propos">
+          <section class="block-info3">
             <h3>A propos</h3>
             <p>{{ profile.about }}</p>
           </section>
@@ -132,7 +132,7 @@
   </script>
   
   <style scoped>
-  .profile-container {
+  .main-container {
     font-family: Arial, sans-serif;
     max-width: 1200px;
     margin: 0 auto;
@@ -164,12 +164,12 @@
     border-radius: 5%;
   }
   
-  .profile-content {
+  .list-country {
     display: flex;
     padding: 20px;
   }
   
-  .profile-sidebar {
+  .list-sidebar {
     flex: 1;
     background-color: white;
     padding: 20px;
@@ -184,11 +184,11 @@
     /* object-fit: cover; */
   }
   
-  .profile-main {
+  .info-container {
     flex: 2;
   }
   
-  .formation, .competences, .a-propos {
+  .block-info1, .block-info2, .block-info3 {
     background-color: white;
     padding: 20px;
     margin-bottom: 20px;
