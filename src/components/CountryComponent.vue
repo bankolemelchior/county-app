@@ -68,14 +68,23 @@
     let country = ref([])
     const dataService = new DataService()
 
-    const fetchCountyData = async () => {
+    async function fetchCountyData()  {
       try {
-          country.value = await dataService.getCountry();
-          console.log(country.value);
+            const resp = await fetch('https://restcountries.com/v3.1/all')
+            const data =   await resp.json()
+            country.value = data;
+                console.log(data);
       } catch (error) {
         console.log(error);
       }
     }
+
+    function fetchData() {
+         fetch('http://example.com/api/cats')
+            .then(response => response.json())
+            .then(data => data)
+            .catch(error => console.error('Erreur:', error));
+        }
 
     function getSpecificCountry(i) {
         index.value = i;
@@ -212,7 +221,4 @@
     margin-top: 20px;
   }
   
-  @media screen and () {
-    
-  }
   </style>
