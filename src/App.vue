@@ -12,31 +12,10 @@
           >
             <div class="hidden sm:block sm:ml-6">
               <div class="flex space-x-4">
-                <!-- utilisez des liens <router-link> pour naviguer entre les itinéraires -->
                 <router-link
-                  class="text-white px-3 py-2 rounded-md text-sm font-medium"
+                  class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                   to="/"
-                  >Todo App</router-link
-                >
-                <router-link
-                  class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                  to="/galleryart"
-                  >Gallery Art</router-link
-                >
-                <router-link
-                  class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                  to="/githubUsers"
-                  >Github User</router-link
-                >
-                <router-link
-                  class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                  to="/country"
                   >country</router-link
-                >
-                <router-link
-                  class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                  to="/mutiStepForm"
-                  >Formulaire</router-link
                 >
               </div>
             </div>

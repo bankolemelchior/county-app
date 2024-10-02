@@ -26,7 +26,7 @@
                 </div>
               </section>
               
-              <section class="block-info2" w-[50%]">
+              <section class="block-info2 w-[50%]">
                 <h3>Autres information</h3>
                 <div v-for="skill in profile.skills" :key="skill.name" class="skill-bar">
                     <p>...</p>
