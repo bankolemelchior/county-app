@@ -30,11 +30,11 @@
                 <h3>Autres information</h3>
                 <div v-for="skill in profile.skills" :key="skill.name" class="skill-bar">
                     <p>...</p>
-                  <!-- <span class="skill-name">{{ skill.name }}</span>
+                  <span class="skill-name">{{ skill.name }}</span>
                   <div class="skill-progress">
                     <div class="skill-progress-bar" :style="{ width: `${skill.level}%` }"></div>
                   </div>
-                  <span class="skill-percentage">{{ skill.level }}%</span> -->
+                  <span class="skill-percentage">{{ skill.level }}%</span>
                 </div>
               </section>
           </div>
@@ -42,6 +42,10 @@
           <section class="block-info3">
             <h3>A propos</h3>
             <p>{{ profile.about }}</p>
+          </section>
+          <section class="block-info3">
+            <h3>Informations générales</h3>
+            <p>Population totale: {{ countryPopulation }} d'habitant</p>
           </section>
         </div>
       </div>
@@ -66,20 +70,24 @@
       );
     });
 
-    let country = ref([])
-    const dataService = new DataService()
+    let country = ref([]);
+    let countryPopulation = ref([]);
 
+    //Utilisation de fetch avec async await
     async function fetchCountyData()  {
       try {
             const resp = await fetch('https://restcountries.com/v3.1/all')
             const data =   await resp.json()
             country.value = data;
-                console.log(data);
+            countryPopulation.value = country.value.map(element => element.population)
+                                                    .reduce((acc, curr) => acc + curr, 0);
+            console.log(countryPopulation.value);
       } catch (error) {
         console.log(error);
       }
     }
 
+    //Utilisation de fetch 2
     function fetchData() {
          fetch('http://example.com/api/cats')
             .then(response => response.json())
@@ -91,11 +99,20 @@
         index.value = i;
         console.log(index.value);
     }
-    let arrayPopulation = country.value.map(el => el.population -1);
-    let sumPopulation = country.value.reduce((acc, curr) => acc + curr, 0);
 
-    console.log(sumPopulation);
-    console.log(arrayPopulation);
+    country.value.forEach(element => {
+        console.log(element.population);
+    });
+
+    watch(index, (newVal, oldVal) => {
+        console.log(newVal, oldVal);
+        console.log(country.value[index]);
+    })
+
+    let populationPortion = computed(() =>{
+    })
+    
+
     onMounted(() => {
       fetchCountyData();
     })
