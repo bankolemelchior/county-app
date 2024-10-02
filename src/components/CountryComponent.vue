@@ -8,7 +8,7 @@
       </header>
       
       <div class="profile-content">
-        <div class="profile-sidebar h-[90vh] overflow-y-scroll mt-[150px]">
+        <div class="profile-sidebar h-[50vh] overflow-y-scroll mt-[150px]">
             <h2>Liste des pays</h2>
             <ul>
               <li v-for="(pays, index) in country" :key="index">
@@ -27,13 +27,14 @@
               </section>
               
               <section class="competences w-[50%]">
-                <h3>Competences</h3>
+                <h3>Autres informations</h3>
                 <div v-for="skill in profile.skills" :key="skill.name" class="skill-bar">
-                  <span class="skill-name">{{ skill.name }}</span>
+                    <p>...</p>
+                  <!-- <span class="skill-name">{{ skill.name }}</span>
                   <div class="skill-progress">
                     <div class="skill-progress-bar" :style="{ width: `${skill.level}%` }"></div>
                   </div>
-                  <span class="skill-percentage">{{ skill.level }}%</span>
+                  <span class="skill-percentage">{{ skill.level }}%</span> -->
                 </div>
               </section>
           </div>
