@@ -8,13 +8,13 @@
       </header>
       
       <div class="list-country">
-        <div class="list-sidebar h-[60vh]  mt-[150px] border-2 border-red-500 ">
+        <div class="list-sidebar h-[50vh]  mt-[150px] border-2 border-red-500 ">
           <div class="flex justify-center gap-5 bg-orange-200 sticky top-0">
             <h2 class="text-[1.2em]">Liste des pays</h2>
             <input class="border-2" type="text" name="" id="" v-model="searchVal" placeholder="Recherche">
           </div>
-          <div class=" h-full">
-              <ul class="h-full overflow-y-scroll">
+          <div class=" h-[97%]">
+              <ul class="h-full overflow-y-scroll mb-4l">
                 <li v-for="(pays, index) in filteredItems" :key="index">
                   <button @click="getSpecificCountry(index)" class="p-1 font-bold">{{ pays.name.common }}</button>
                 </li>
@@ -85,13 +85,8 @@
         item.name.official.toLowerCase().includes(query)
       );
 
-      console.log(x.value);
     });
     
-    watch(filteredItems, (newV, oldV) => {
-      console.log(filteredItems);
-    })
-
 
     //Utilisation de fetch avec async await
     async function fetchCountyData()  {
@@ -101,19 +96,11 @@
             country.value = data;
             countryPopulation.value = country.value.map(element => element.population)
                                                     .reduce((acc, curr) => acc + curr, 0);
-            console.log(countryPopulation.value);
+            // console.log(countryPopulation.value);
       } catch (error) {
         console.log(error);
       }
     }
-
-    //Utilisation de fetch 2
-    function fetchData() {
-         fetch('http://example.com/api/cats')
-            .then(response => response.json())
-            .then(data => data)
-            .catch(error => console.error('Erreur:', error));
-        }
 
     function getSpecificCountry(i) {
         index.value = i;
@@ -125,30 +112,18 @@
     });
 
     
-    let populationPortion = computed((pays) =>{
-      let a = country.value[pays];
-      console.log(a);
-    })
-    
     watch(index, (newVal, oldVal) => {
       if (country.value.length > 0) {
         let element = country.value[index.value];
-        console.log(newVal, oldVal);
         countryPopulationPortion.value = ((element.population / countryPopulation.value)*100).toFixed(2);
-        console.log(element);
+        // console.log(element);
     }
-        // populationPortion(newVal)
     })
 
     onMounted(() => {
       fetchCountyData();
     })
 
-  
-  const handleNext = () => {
-    console.log('Next button clicked')
-    // Add your logic for the next action here
-  }
   </script>
   
   <style scoped>
