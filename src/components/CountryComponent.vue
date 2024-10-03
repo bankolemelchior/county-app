@@ -8,14 +8,19 @@
       </header>
       
       <div class="list-country">
-        <div class="list-sidebar h-[50vh] overflow-y-scroll mt-[150px]">
-            <h2>Liste des pays</h2>
-            <ul>
-              <li v-for="(pays, index) in country" :key="index">
-                <button @click="getSpecificCountry(index)" class="p-1 font-bold">{{ pays.name.common }}</button>
-              </li>
-            </ul>
-        </div>
+        <div class="list-sidebar h-[60vh]  mt-[150px] border-2 border-red-500 ">
+          <div class="flex justify-center gap-5 bg-orange-200 sticky top-0">
+            <h2 class="text-[1.2em]">Liste des pays</h2>
+            <input class="border-2" type="text" name="" id="" placeholder="Recherche">
+          </div>
+          <div class=" h-full">
+              <ul class="h-full overflow-y-scroll">
+                <li v-for="(pays, index) in country" :key="index">
+                  <button @click="getSpecificCountry(index)" class="p-1 font-bold">{{ pays.name.common }}</button>
+                </li>
+              </ul>
+            </div>
+          </div>
         
         <div class="info-container">
           <div class="flex justify-between gap-10 p-2">
@@ -104,14 +109,17 @@
         console.log(element.population);
     });
 
-    watch(index, (newVal, oldVal) => {
-        console.log(newVal, oldVal);
-        console.log(country.value[index]);
-    })
-
-    let populationPortion = computed(() =>{
+    
+    let populationPortion = computed((pays) =>{
+      let a = country.value[pays];
+      console.log(a);
     })
     
+    watch(index, (newVal, oldVal) => {
+        console.log(newVal, oldVal);
+        console.log(country.value[index.value]);
+        populationPortion(newVal)
+    })
 
     onMounted(() => {
       fetchCountyData();
