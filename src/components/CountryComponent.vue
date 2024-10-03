@@ -11,11 +11,11 @@
         <div class="list-sidebar h-[60vh]  mt-[150px] border-2 border-red-500 ">
           <div class="flex justify-center gap-5 bg-orange-200 sticky top-0">
             <h2 class="text-[1.2em]">Liste des pays</h2>
-            <input class="border-2" type="text" name="" id="" placeholder="Recherche">
+            <input class="border-2" type="text" name="" id="" v-model="searchVal" placeholder="Recherche">
           </div>
           <div class=" h-full">
               <ul class="h-full overflow-y-scroll">
-                <li v-for="(pays, index) in country" :key="index">
+                <li v-for="(pays, index) in filteredItems" :key="index">
                   <button @click="getSpecificCountry(index)" class="p-1 font-bold">{{ pays.name.common }}</button>
                 </li>
               </ul>
@@ -72,18 +72,26 @@
 
     const searchVal = ref('');
     let index = ref(0);
+    let country = ref([]);
+    let countryPopulation = ref([]);
+    let countryPopulationPortion = ref(0);
+
+    let x = ref('');
     //Fonction de filtrage
     const filteredItems = computed(() => {
       const query = searchVal.value.toLowerCase();
       console.log(query);
-      return cars.value.filter(item =>
-        item.nom.toLowerCase().includes(query)
+     return  x.value = country.value.filter(item =>
+        item.name.official.toLowerCase().includes(query)
       );
-    });
 
-    let country = ref([]);
-    let countryPopulation = ref([]);
-    let countryPopulationPortion = ref(0);
+      console.log(x.value);
+    });
+    
+    watch(filteredItems, (newV, oldV) => {
+      console.log(filteredItems);
+    })
+
 
     //Utilisation de fetch avec async await
     async function fetchCountyData()  {
