@@ -15,8 +15,8 @@
           </div>
           <div class=" h-[97%]">
               <ul class="h-full overflow-y-scroll mb-4l">
-                <li v-for="(pays, index) in filteredItems" :key="index">
-                  <button @click="getSpecificCountry(index)" class="p-1 font-bold">{{ pays.name.common }}</button>
+                <li v-for="pays in filteredItems" :key="pays.id">
+                  <button @click="getSpecificCountry(pays.id)" class="p-1 font-bold">{{ pays.name.common }}</button>
                 </li>
               </ul>
             </div>
@@ -36,7 +36,7 @@
               </section>
               
               <section class="block-info2 w-[50%]">
-                <h3>Autres information</h3>
+                <h3 class="font-bold">Autres information</h3>
                 <div class="population">
                     <p>...</p>
                   <!-- <span class="skill-name">{{ skill.name }}</span> -->
@@ -51,7 +51,7 @@
           </div>
           
           <section class="block-info3">
-            <h3>A propos</h3>
+            <h3 class="font-bold">A propos</h3>
             <p>...</p>
           </section>
           <section class="block-info3">
@@ -67,11 +67,11 @@
   <script setup>
     import { reactive, watch } from 'vue'
     import { ref, computed, onMounted } from 'vue';
-    import { DataService } from '@/service/DataService';
 
 
     const searchVal = ref('');
     let index = ref(0);
+    let count = ref(0);
     let country = ref([]);
     let countryPopulation = ref([]);
     let countryPopulationPortion = ref(0);
@@ -81,42 +81,41 @@
     const filteredItems = computed(() => {
       const query = searchVal.value.toLowerCase();
       console.log(query);
-     return  x.value = country.value.filter(item =>
+     return country.value.filter(item =>
         item.name.official.toLowerCase().includes(query)
       );
 
     });
     
-
+    watch(searchVal, (newV, oldV) => {
+      console.log(newV);
+    })
     //Utilisation de fetch avec async await
     async function fetchCountyData()  {
       try {
             const resp = await fetch('https://restcountries.com/v3.1/all')
             const data =   await resp.json()
             country.value = data;
+            country.value.forEach(el => el.id = count.value++)
             countryPopulation.value = country.value.map(element => element.population)
                                                     .reduce((acc, curr) => acc + curr, 0);
-            // console.log(countryPopulation.value);
+            console.log(country.value);
       } catch (error) {
         console.log(error);
       }
     }
 
-    function getSpecificCountry(i) {
-        index.value = i;
-        console.log(index.value);
+    function getSpecificCountry(id) {
+        index.value = id;
+        // console.log(index.value);
     }
-
-    country.value.forEach(element => {
-        console.log(element.population);
-    });
 
     
     watch(index, (newVal, oldVal) => {
       if (country.value.length > 0) {
         let element = country.value[index.value];
         countryPopulationPortion.value = ((element.population / countryPopulation.value)*100).toFixed(2);
-        // console.log(element);
+        console.log(element);
     }
     })
 
