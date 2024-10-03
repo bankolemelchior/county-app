@@ -27,26 +27,31 @@
               <section class="block-info1 w-[50%]">
                 <div>
                   <p><strong>Capitale: </strong><span>{{ country[index]?.capital[0] }}</span></p>
-                  <p><strong>Population: </strong><span>{{ country[index]?.population }}</span></p>
+                  <p><strong>Langue: </strong><span>{{ country[index]?.languages.eng }}</span></p>
+                  <p><strong>Monnaie: </strong><span>{{ country[index]?.currencies.BBD.name  }} ({{ country[index]?.currencies.BBD.symbol }})</span></p>
+                  <p><strong>Continent: </strong><span>{{ country[index]?.continents[0] }}</span></p>
+                  <p><strong>Sous-région: </strong><span>{{ country[index]?.subregion }}</span></p>
                 </div>
               </section>
               
               <section class="block-info2 w-[50%]">
                 <h3>Autres information</h3>
-                <div v-for="skill in profile.skills" :key="skill.name" class="skill-bar">
+                <div class="population">
                     <p>...</p>
-                  <span class="skill-name">{{ skill.name }}</span>
-                  <div class="skill-progress">
-                    <div class="skill-progress-bar" :style="{ width: `${skill.level}%` }"></div>
+                  <!-- <span class="skill-name">{{ skill.name }}</span> -->
+                  <div class="population-portion">
+                    <p>Population: {{ country[index]?.population }} <strong>{{ countryPopulationPortion }} %</strong> </p>
+                    <span>{{ countryPopulationPortion }} %</span>
+                    <div class="population-bar" :style="{ width: `${countryPopulationPortion}%` }"></div>
                   </div>
-                  <span class="skill-percentage">{{ skill.level }}%</span>
+                  <!-- <span class="skill-percentage">{{ skill.level }}%</span> -->
                 </div>
               </section>
           </div>
           
           <section class="block-info3">
             <h3>A propos</h3>
-            <p>{{ profile.about }}</p>
+            <p>...</p>
           </section>
           <section class="block-info3">
             <h3>Informations générales</h3>
@@ -77,6 +82,7 @@
 
     let country = ref([]);
     let countryPopulation = ref([]);
+    let countryPopulationPortion = ref(0);
 
     //Utilisation de fetch avec async await
     async function fetchCountyData()  {
@@ -116,39 +122,19 @@
     })
     
     watch(index, (newVal, oldVal) => {
+      if (country.value.length > 0) {
+        let element = country.value[index.value];
         console.log(newVal, oldVal);
-        console.log(country.value[index.value]);
-        populationPortion(newVal)
+        countryPopulationPortion.value = ((element.population / countryPopulation.value)*100).toFixed(2);
+        console.log(element);
+    }
+        // populationPortion(newVal)
     })
 
     onMounted(() => {
       fetchCountyData();
     })
 
-  const profile = reactive({
-    name: 'MESSIBATOR Anatol Bertrand',
-    title: 'Développeur fullStack',
-    image: 'path/to/profile-image.jpg',
-    email: 'messi.anatol@gmail.com',
-    phone: '+229 66739946',
-    location: 'Abomey-Calavi',
-    socialMedia: ['facebook', 'instagram', 'youtube'],
-    education: [
-      'Obtention du bac en 1974',
-      'Obtention du Bepc en 1970',
-      'Obtention du cep en 1965',
-      'Obtention du bac en 1974',
-      'Obtention du Bepc en 1970',
-      'Obtention du cep en 1965'
-    ],
-    skills: [
-      { name: 'Laravel', level: 86 },
-      { name: 'VueJS', level: 69 },
-      { name: 'Python', level: 56 },
-      { name: 'Angular', level: 45 }
-    ],
-    about: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus esse in, ex tempore quasi eveniet quo? Tempora, explicabo. Aliquam voluptatem praesentium quaerat fugit rerum? Repellat, ut ex molestiae illum reiciendis sint ea vel delectus perspiciatis quod, consectetur tempore voluptatum dolor qui ullam dolorum? Ratione rerum quisquam, inventore perferendis cumque eos tenetur veritatis doloremque provident optio voluptatibus delectus incidunt est non officia corrupti sit dolorem autem rem? Similique, nostrum enim saepe hic, voluptatibus reprehenderit obcaecati laborurn nihil sed possimus repellendus vero ab consectetur perferendis veniam esse delectus voluptatum dolore nesciunt. Quae nam impedit molestiae dolor, eaque ad asperiores iusto fugiat laboriosam dolore praesentium beatae, cupiditate optio soluta, perspiciatis non alias nemo dolores! Voluptas ut error libero mollitia omnis consectetur voluptates ex, saepe sed officia impedit excepturi!'
-  })
   
   const handleNext = () => {
     console.log('Next button clicked')
@@ -220,18 +206,19 @@
     border-radius: 8px;
   }
   
-  .skill-bar {
+  .population {
     margin-bottom: 10px;
   }
   
-  .skill-progress {
+  .population-portion {
+    padding-inline: 1em;
     background-color: #e0e0e0;
     height: 20px;
     border-radius: 10px;
     overflow: hidden;
   }
   
-  .skill-progress-bar {
+  .population-bar {
     height: 100%;
     background-color: #4CAF50;
   }
