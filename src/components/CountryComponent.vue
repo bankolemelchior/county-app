@@ -28,9 +28,10 @@
                 <div>
                   <p><strong>Capitale: </strong><span>{{ country[index]?.capital[0] }}</span></p>
                   <p><strong>Langue: </strong><span>{{ country[index]?.languages.eng }}</span></p>
-                  <p><strong>Monnaie: </strong><span>{{ country[index]?.currencies.BBD.name  }} ({{ country[index]?.currencies.BBD.symbol }})</span></p>
+                  <p><strong>Monnaie: </strong><span>{{ country[index]?.currencies.BBD?.name  }} ({{ country[index]?.currencies.BBD?.symbol }})</span></p>
                   <p><strong>Continent: </strong><span>{{ country[index]?.continents[0] }}</span></p>
                   <p><strong>Sous-région: </strong><span>{{ country[index]?.subregion }}</span></p>
+                  <p><strong>Emblème: </strong><span><img :src="country[index]?.coatOfArms.png" alt=""></span></p>
                 </div>
               </section>
               
